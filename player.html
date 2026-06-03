@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard do Reprodutor</title>
+  <style>
+    body {
+      background: #121212;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 30px;
+      margin: 0;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 20px;
+    }
+    h2 { margin: 0; color: #1db954; font-size: 28px; }
+    
+    button {
+      background: #1db954;
+      color: black;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.2s;
+    }
+    button:hover { transform: scale(1.05); filter: brightness(1.2); }
+    button:active { transform: scale(0.95); }
+    button:disabled { background: #555; cursor: not-allowed; transform: none; }
+
+    .player-card {
+      background: #1e1e1e;
+      padding: 25px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    
+    /* UX Avançada: Deslizamento vertical suave do título igual Spotify nativo */
+    #track-name { 
+      font-size: 20px; 
+      margin-bottom: 25px; 
+      transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateY(0);
+    }
+    
+    .controls button { margin: 0 10px; font-size: 18px; padding: 12px 25px; }
+    
+    #btn-fav {
+      transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .settings-card {
+      margin-top: 40px;
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 12px;
+    }
+    .settings-card h3 { margin-top: 0; color: #aaa; font-size: 16px; margin-bottom: 20px; }
+    
+    label.checkbox-label { display: flex; align-items: center; cursor: pointer; font-size: 15px; margin-bottom: 15px;}
+    input[type="checkbox"] { width: 18px; height: 18px; margin-right: 10px; accent-color: #1db954; }
+
+    .gif-inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .gif-inputs label {
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #2a2a2a;
+      padding: 12px 15px;
+      border-radius: 8px;
+    }
+    .gif-inputs input[type="file"] { font-size: 12px; color: #ccc; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>Spotify Dashboard</h2>
+    <div>
+      <button id="btn-login">Conectar Spotify</button>
+      <button id="btn-logout" style="display:none; background: #333; color: white;">Sair da Conta</button>
+    </div>
+  </div>
+  
+  <div id="player-view" style="display:none;" class="player-card">
+    <div id="track-name">Carregando...</div>
+    <div class="controls">
+      <button id="btn-prev">⏮</button>
+      <button id="btn-play">▶️ / ⏸</button>
+      <button id="btn-next">⏭</button>
+    </div>
+    <div style="margin-top: 25px;">
+      <button id="btn-fav" style="background: #282828; color: white;">🤍 Favoritar Faixa</button>
+    </div>
+  </div>
+
+  <div class="settings-card">
+    <h3>Configurações do Pet</h3>
+    <label class="checkbox-label">
+      <input type="checkbox" id="toggle-pet" checked>
+      Mostrar Pet Flutuante na tela (Desmarque para ocultar)
+    </label>
+    
+    <div class="gif-inputs">
+      <label>
+        <span>🌟 Imagem do seu Pet (GIF Animado)</span>
+        <input type="file" id="img-pet" accept="image/*">
+      </label>
+    </div>
+
+    <p style="color: #666; font-size: 12px; margin-top: 20px;">Dica: O App extrairá um frame "congelado" do seu GIF para quando a música pausar! Um arquivo resolve tudo.</p>
+  </div>
+
+  <script src="player_renderer.js"></script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chiikawa Spotify ♪</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Lucide Icons script -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <div class="app-container">
+    <!-- ─── Conteúdo Principal ──────────────────────────────── -->
+    <div class="main-content" id="main-content">
+
+      <!-- Header -->
+      <div class="header">
+        <div class="header-title">
+          <i data-lucide="music" style="width: 20px; height: 20px;"></i>
+          <span>Chiikawa Spotify</span>
+        </div>
+        <div class="header-actions">
+          <button class="btn-theme-toggle" id="btn-theme" title="Alternar tema">
+            <i data-lucide="moon" style="width: 16px; height: 16px;"></i>
+          </button>
+          <button class="btn btn-primary" id="btn-login">
+            <i data-lucide="log-in" style="width: 14px; height: 14px;"></i> Conectar Spotify
+          </button>
+          <button class="btn btn-secondary" id="btn-logout" style="display:none;">
+            <i data-lucide="log-out" style="width: 14px; height: 14px;"></i> Sair
+          </button>
+        </div>
+      </div>
+
+      <!-- Player Card (oculto até login) -->
+      <div id="player-view" style="display:none;">
+        <div class="player-card">
+          <!-- Vinil giratório -->
+          <div class="vinyl-container" id="vinyl-container">
+            <div class="vinyl-disc" id="vinyl-disc">
+              <img class="vinyl-cover-img" id="vinyl-cover" src="" alt="Capa do álbum"
+                   style="background: var(--bg-secondary);" />
+            </div>
+          </div>
+
+          <!-- Info da música -->
+          <div class="track-info">
+            <div class="track-name" id="track-name">Carregando...</div>
+            <div class="track-artist" id="track-artist"></div>
+            <div class="track-status" id="track-status"></div>
+            <div class="track-bpm" id="track-bpm" style="display:none;"></div>
+          </div>
+
+          <!-- Controles de reprodução -->
+          <div class="controls">
+            <button class="btn btn-icon btn-ghost" id="btn-prev" title="Anterior">
+              <i data-lucide="skip-back" style="width: 18px; height: 18px;"></i>
+            </button>
+            <button class="btn btn-icon btn-play-main" id="btn-play" title="Play/Pause">
+              <i data-lucide="play" style="width: 22px; height: 22px; margin-left: 2px;" id="icon-play"></i>
+            </button>
+            <button class="btn btn-icon btn-ghost" id="btn-next" title="Próxima">
+              <i data-lucide="skip-forward" style="width: 18px; height: 18px;"></i>
+            </button>
+          </div>
+
+          <!-- Ações: Favoritar + Playlist -->
+          <div class="track-actions">
+            <button class="btn btn-secondary btn-fav" id="btn-fav">
+              <i data-lucide="heart" style="width: 14px; height: 14px;" id="icon-fav"></i> Favoritar
+            </button>
+            <button class="btn btn-secondary" id="btn-add-playlist" title="Adicionar a playlist">
+              <i data-lucide="list-plus" style="width: 14px; height: 14px;"></i> Playlist
+            </button>
+          </div>
+        </div>
+
+        <!-- Fila de reprodução -->
+        <div class="queue-section" id="queue-section">
+          <div class="queue-header">
+            <span class="queue-title">
+              <i data-lucide="list-music" style="width: 14px; height: 14px; display: inline-block; vertical-align: -2px;"></i> Próximas na fila
+            </span>
+          </div>
+          <ul class="queue-list" id="queue-list">
+            <!-- Preenchido via JS -->
+          </ul>
+        </div>
+      </div>
+
+      <!-- Empty state (antes do login) -->
+      <div id="empty-state" class="empty-state">
+        <i data-lucide="headphones" style="width: 48px; height: 48px; margin-bottom: 12px; color: var(--text-muted);"></i>
+        <p>Conecte sua conta do Spotify<br>para começar a ouvir músicas!</p>
+      </div>
+
+      <!-- Configurações do Pet -->
+      <div class="settings-card">
+        <div class="settings-title">⚙ Configurações</div>
+
+        <div class="setting-row">
+          <span class="setting-label">🐱 Pet flutuante</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-pet" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="gif-upload-area">
+          <label class="gif-upload-label">
+            <span>🌟 Imagem do Pet (GIF animado)</span>
+            <input type="file" id="img-pet" accept="image/*">
+          </label>
+          <span class="settings-hint">Dica: O app extrai um frame "congelado" do GIF para quando a música pausar!</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── Sidebar de Playlists ───────────────────────────── -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <span class="sidebar-title">📋 Suas Playlists</span>
+        <button class="btn btn-icon btn-ghost" id="btn-close-sidebar" title="Fechar">✕</button>
+      </div>
+      <div class="sidebar-body" id="playlist-list">
+        <!-- Preenchido via JS -->
+      </div>
+      <div class="sidebar-footer">
+        <form class="create-playlist-form" id="create-playlist-form">
+          <input class="input-text" type="text" id="new-playlist-name" placeholder="Nova playlist..." required>
+          <button class="btn btn-primary" type="submit">＋</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast de notificação -->
+  <div class="toast" id="toast"></div>
+
+  <script src="player_renderer.js"></script>
+</body>
+</html>
